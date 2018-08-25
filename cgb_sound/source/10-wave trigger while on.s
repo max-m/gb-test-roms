@@ -1,7 +1,7 @@
 ; Retriggers wave without stopping first
 
 ;.define REQUIRE_DMG 1
-;.define REQUIRE_CGB 1
+.define REQUIRE_CGB 1
 .include "shell.inc"
 .include "apu.s"
 
@@ -14,7 +14,7 @@ main:
 test:
      add  $99
      ld   b,a
-     
+
      ; Reload wave and have its first
      ; sample read occur 2 clocks earlier
      ; each loop iteration
@@ -25,13 +25,13 @@ test:
      ld   a,b
      sta  NR33      ; period
      wreg NR34,$87  ; start
-     
+
      ; Retrigger wave
      wreg NR33,-2   ; period = 4
      delay_clocks 168
      wreg NR34,$87  ; restart
      delay_clocks 40
-     
+
      ; Print wave RAM
      wreg NR30,0
      ld   c,$30
@@ -41,7 +41,7 @@ test:
      bit  6,c
      jr   z,-
      call print_newline
-     
+
      ret
 
 wave:

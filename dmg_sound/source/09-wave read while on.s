@@ -1,7 +1,7 @@
 ; Reads from wave RAM while playing, each time 2
 ; clocks later.
 
-;.define REQUIRE_DMG 1
+.define REQUIRE_DMG 1
 ;.define REQUIRE_CGB 1
 .include "shell.inc"
 .include "apu.s"
@@ -15,7 +15,7 @@ main:
 test:
      add  $99
      ld   b,a
-     
+
      ; Reload wave and have its first
      ; sample read occur 2 clocks earlier
      ; each loop iteration
@@ -26,14 +26,14 @@ test:
      ld   a,b
      sta  NR33      ; period
      wreg NR34,$87  ; start
-     
+
      ; Read from wave
      wreg NR33,-2   ; period = 4
      delay_clocks 176
      lda  WAVE
-     
+
      call print_a
-     
+
      ret
 
 wave:

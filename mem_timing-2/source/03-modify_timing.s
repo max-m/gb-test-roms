@@ -1,6 +1,8 @@
 ; Tests timing of accesses made by
 ; memory read-modify-write instructions
 
+.define ROM_NAME "modify_timing"
+
 .include "shell.inc"
 .include "tima_64.s"
 
@@ -37,7 +39,7 @@ instructions_end:
 main:
      call init_tima_64
      set_test 0
-     
+
      ; Test instructions
      ld   hl,instructions
 -    call @test_instr
@@ -45,7 +47,7 @@ main:
      ld   a,l
      cp   <instructions_end
      jr   nz,-
-     
+
      jp   tests_done
 
 @test_instr:
@@ -100,19 +102,19 @@ main:
      ld   a,(hl+)
      ld   (instr+2),a
      push hl
-     
+
      ; Find result when access doesn't occur
      ld   b,0
      call @time_access
-     
+
      ; Find first access
      call @find_next_access
      ld   d,b
-     
+
      ; Find second access
      call @find_next_access
      ld   e,b
-     
+
      pop  hl
      ret
 
@@ -129,13 +131,13 @@ main:
      ld   a,b
      cp   10
      jr   c,-
-     
+
      ; Couldn't find time, so return 0/0
      ld   a,c
      ld   b,0
      ld   d,b
      ret
-     
+
 ; Tests for access
 ; B -> which cycle to test
 ; A <- timer value after test

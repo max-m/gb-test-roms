@@ -1,6 +1,8 @@
 ; Tests timing of accesses made by
 ; memory write instructions
 
+.define ROM_NAME "write_timing"
+
 .include "shell.inc"
 .include "tima_64.s"
 
@@ -26,7 +28,7 @@ instructions_end:
 main:
      call init_tima_64
      set_test 0
-     
+
      ; Test instructions
      ld   hl,instructions
 -    call @test_instr
@@ -36,7 +38,7 @@ main:
      ld   a,l
      cp   <instructions_end
      jr   nz,-
-     
+
      jp   tests_done
 
 @print_failed:
@@ -71,7 +73,7 @@ main:
      ld   a,(hl+)
      ld   (instr+2),a
      push hl
-     
+
      ; Test for writes on each cycle
      ld   b,0
 -    push bc
@@ -88,7 +90,7 @@ main:
      cp   10
      jr   nz,-
      ld   b,0
-     
+
 @found:
      ld   a,b
      pop  hl

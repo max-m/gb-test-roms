@@ -1,7 +1,7 @@
 ; Tests timing of accesses made by
 ; memory read instructions
 
-.define ROM_NAME "foo"
+.define ROM_NAME "read_timing"
 
 .include "shell.inc"
 .include "tima_64.s"
@@ -30,7 +30,7 @@ instructions:
      .byte $3A,$00,$00,2 ; LD   A,(HL-)
      .byte $F0,<tima_64,$00,3 ; LDH  A,($00)
      .byte $FA,<tima_64,>tima_64,4 ; LD   A,($0000)
-     
+
      .byte $CB,$46,$00,3 ; BIT  0,(HL)
      .byte $CB,$4E,$00,3 ; BIT  1,(HL)
      .byte $CB,$56,$00,3 ; BIT  2,(HL)
@@ -44,7 +44,7 @@ instructions_end:
 main:
      call init_tima_64
      set_test 0
-     
+
      ; Test instructions
      ld   hl,instructions
 -    call @time_instr
@@ -54,7 +54,7 @@ main:
      ld   a,l
      cp   <instructions_end
      jr   nz,-
-     
+
      jp   tests_done
 
 @print_failed:
@@ -93,12 +93,12 @@ main:
      ld   a,(hl+)
      ld   (instr+2),a
      push hl
-     
+
      ; Find result when access doesn't occur
      ld   b,0
      call @time_access
      ld   c,a
-     
+
      ; Test for accesses on each cycle
      ld   b,0
 -    push bc
@@ -111,7 +111,7 @@ main:
      cp   10
      jr   nz,-
      ld   b,0
-     
+
 @found:
      ld   a,b
      pop  hl
@@ -135,7 +135,7 @@ instr:
      nop
      nop
      nop
-     
+
      ; Add all registers together to yield
      ; unique value that differs based on
      ; read occurring before or after tima_64
